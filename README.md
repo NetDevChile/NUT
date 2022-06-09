@@ -8,12 +8,7 @@ apt install nutapt install nut
 
 ################### Configurar NUT ###################
 
-´´´
-$
-
-´´´
-```
-# 
+``` 
 $ nano /etc/nut/nut.conf
 ```
 
