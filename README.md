@@ -19,22 +19,31 @@ nano /etc/nut/ups.conf
 
 --------------- Archivo ups.conf -------------------
 
-
 maxretry = 3
+
 [ups1]
+
   driver = snmp-ups
+  
   port = x.x.x.31
+  
   snmp_version = v1
+  
   desc = "UPS High Priority"
+  
   community = public
 
 [ups2]
+  
   driver = snmp-ups
+  
   port = x.x.x.62
+  
   snmp_version = v1
+  
   desc = "UPS Aux"
+  
   community = lsst_network
-
 
 ############## Configurar upsd.conf #################
 
