@@ -7,17 +7,10 @@ How to Install NUT in SmartGrid System
 apt install nutapt install nut
 
 ################### Configurar NUT ###################
-´´´
-nano /etc/nut/nut.conf
-´´´´
+```
+$ nano /etc/nut/nut.conf
 
 ```
-# cd /path/to/git/clone
-# pip3 install .
-# cp config.example.json /etc/influx_nut.json  # edit to set up for your needs
-$ influx_nut --config /etc/influx_nut.json
-```
-
 --------------- Archivo nut.conf -------------------
 
 MODE=standalone
