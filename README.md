@@ -15,9 +15,9 @@ $ nano /etc/nut/nut.conf
 ```
 
 --------------- Archivo nut.conf -------------------
-
+```
 MODE=standalone
-
+```
 ################## Configurar ups.conf ##############
 
 ``` 
@@ -25,7 +25,7 @@ $ nano /etc/nut/ups.conf
 ```
 
 --------------- Archivo ups.conf -------------------
-
+```
 maxretry = 3
 
 [ups1]
@@ -50,110 +50,102 @@ maxretry = 3
   
   desc = "UPS Aux"
   
-  community = lsst_network
+  community = your_network
 
+```
 ############## Configurar upsd.conf #################
 
+```
 nano /etc/nut/upsd.conf
+```
 
 -------------- Archivo upsd.conf --------------------
-                                                   
+
+```
 /etc/netplan# cat /etc/nut/upsd.conf
 MAXAGE 15
 STATEPATH /var/run/nut
 LISTEN 127.0.0.1 3493
 LISTEN 172.19.221.221 3493
 MAXCONN 1024
+```
 
 ############## Inicio de servicio NUT ###############
 
-service nut-server start
-upsc ups1
-upsc ups2
+```
+#service nut-server start
+#upsc ups1
+#upsc ups2
+```
 
 ############## Configuracion upsd.users #############
 
+```
 nano /etc/nut/upsd.users
+```
 
 -------------- Archivo upsd.users -------------------
 
+```
 [admin]
         password = "password"
         actions = SET FSD
         instcmds = ALL
         upsmon master
+```
 
 ############### Configuracion upsmon.conf ###########
 
+```
 nano /etc/nut/upsmon.conf
+```
 
 --------------- Archivo upsmon.conf -----------------
 
+```
 MONITOR ups1 1 "admin" "password" master
-
 RUN_AS_USER nut
-
 MINSUPPLIES 1
-
 SHUTDOWNCMD "/opt/ups/halt_server.sh"
-
 POLLFREQ 5
-
 POLLFREQALERT 5
-
 HOSTSYNC 15
-
 DEADTIME 15
-
 POWERDOWNFLAG /etc/killpower
-
 NOTIFYCMD "/sbin/upssched"
-
 NOTIFYMSG ONLINE "UPS: Normal state"
-
 NOTIFYMSG ONBATT "UPS: On battery"
-
 NOTIFYMSG LOWBATT "UPS: Battery low"
-
 NOTIFYMSG FSD "UPS: Starting shutdown"
-
 NOTIFYMSG COMMOK "UPS: Communication restored"
-
 NOTIFYMSG COMMBAD "UPS: Communication lose"
-
 NOTIFYMSG SHUTDOWN "UPS: Shutting down"
-
 NOTIFYMSG REPLBATT "UPS: Replace battery"
-
 NOTIFYFLAG ONLINE SYSLOG+WALL+EXEC
-
 NOTIFYFLAG ONBATT SYSLOG+WALL+EXEC
-
 NOTIFYFLAG LOWBATT SYSLOG+WALL+EXEC
-
 NOTIFYFLAG FSD SYSLOG+WALL+EXEC
-
 NOTIFYFLAG COMMOK SYSLOG+WALL+EXEC
-
 NOTIFYFLAG COMMBAD SYSLOG+WALL+EXEC
-
 NOTIFYFLAG SHUTDOWN SYSLOG+WALL+EXEC
-
 NOTIFYFLAG REPLBATT SYSLOG+WALL+EXEC
-
 RBWARNTIME 43200
 NOCOMMWARNTIME 300
 FINALDELAY 0
+```
 
 ################### Configurar upssched.conf ##############
 
+```
 nano /etc/nut/upssched.conf
+```
 
 ------------------- Archivo upssched.conf -----------------
 
 ############# Network UPS Tools - upssched.conf ###########
-CMDSCRIPT /opt/ups/ups_event.sh
 
+```
+CMDSCRIPT /opt/ups/ups_event.sh
 ##Hay que crear la ruta /var/run/nut/upssched/ si no existe con propietario nut:nut
 #PIPEFN /var/run/nut/upssched/upssched.pipe
 #LOCKFN /var/run/nut/upssched/upssched.lock
@@ -162,6 +154,7 @@ CMDSCRIPT /opt/ups/ups_event.sh
 #ambos ficheros:
 PIPEFN /tmp/upssched.pipe
 LOCKFN /tmp/upssched.lock
+```
 
 ############### Si hay corte de corriente, espera 300 seg y apaga ##############
 AT ONBATT * START-TIMER  ups-on-battery-shutdown  30000000
