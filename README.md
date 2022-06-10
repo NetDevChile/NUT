@@ -28,7 +28,7 @@ $ nano /etc/nut/ups.conf
 ```
 maxretry = 3
 
-[ups1]
+[UPS 1]
 
   driver = snmp-ups
   
@@ -40,7 +40,7 @@ maxretry = 3
   
   community = public
 
-[ups2]
+[UPS 2]
   
   driver = snmp-ups
   
@@ -66,7 +66,7 @@ nano /etc/nut/upsd.conf
 MAXAGE 15
 STATEPATH /var/run/nut
 LISTEN 127.0.0.1 3493
-LISTEN 172.19.221.221 3493
+LISTEN x.x.x.21 3493
 MAXCONN 1024
 ```
 
@@ -74,8 +74,8 @@ MAXCONN 1024
 
 ```
 #service nut-server start
-#upsc ups1
-#upsc ups2
+#upsc UPS 1
+#upsc UPS 2
 ```
 
 ############## Configuracion upsd.users #############
@@ -157,57 +157,82 @@ LOCKFN /tmp/upssched.lock
 ```
 
 ############### Si hay corte de corriente, espera 300 seg y apaga ##############
+
+```
 AT ONBATT * START-TIMER  ups-on-battery-shutdown  30000000
+```
 
 ############### Si vuelve la corriente, se cancela el timer ####################
+
+```
 AT ONLINE * CANCEL-TIMER  ups-on-battery-shutdown
+```
 
 ######### Si hay corte de corriente, espera 15 seg antes de notificarlo ########
+
+```
 AT ONBATT * START-TIMER ups-on-battery 15
 AT ONLINE * CANCEL-TIMER ups-on-battery
+```
 
 #En los siguientes eventos, llama al script de notificacion para que lo procese.
+
+```
 AT ONLINE * EXECUTE ups-back-on-line
 AT REPLBATT * EXECUTE ups-change_battery
 AT LOWBATT * EXECUTE ups-low-battery
 AT COMMOK * EXECUTE ups-comunication-ok
 AT COMMBAD * EXECUTE ups-comunication-bad
+```
 
 #################### Configuracion Usuario Nut ##################
 
+```
 visudo
+```
 
 -------------------- Archivo sudoers.tmp ----------------------
 
 #################### al Final del Archivo #######################
 
+```
 nut ALL = (ALL:ALL) NOPASSWD: /bin/systemctl, /sbin/shutdown
+```
 
 #################### Configuacion config ########################
 
+```
 nano /opt/ups/config
-
+```
 -------------------- Archivo config -----------------------------
 
 ################ IDENTIFICACION GATEWAY #########################
 
-GW_ID="lsstalarm@netdev.cl"
+```
+GW_ID="site-alarm@netdev.cl"
+```
 
 ########### NOMBRE DE LA PERSONA QUE RECIBIRA EL MAIL ###########
 
-MAIL_NAME="LSST Alarm"
+```
+MAIL_NAME="Site Alarm"
+```
 
 ########### MAIL AL QUE SE ENVIARA LA INFO ######################
 
-MAIL_RCPT="lsstalarm@netdev.cl"
+```
+MAIL_RCPT="site-alarm@netdev.cl"
+```
 
 ################### Configuracion mail.sh #######################
 
+```
 nano /opt/ups/mail.sh
+```
 
 ------------------- Archivo mail.sh------------------------------
 
-
+```
 #!/bin/bash
 
 source config
@@ -228,9 +253,11 @@ function mailSend() {
 
     /bin/rm $TMP_FILE
 }
+```
 
 ################### Configurar ups_event.sh ######################
 
+```
 #!/bin/bash
 DEBUG=0
 
@@ -297,10 +324,11 @@ fi
 log "ups_event.sh: everything done, exit."
 
 exit 0
-
+```
 
 #################### Depuracion y Resolucion de Servicios ###########
 
+```
 service nut-server restart
 service nut-monitor restart
 
@@ -308,4 +336,4 @@ systemctl status nut-server.service
 systemctl status nut-monitor.service
 
 journalctl -xe
-
+```
