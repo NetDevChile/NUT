@@ -146,12 +146,19 @@ nano /etc/nut/upssched.conf
 
 ```
 CMDSCRIPT /opt/ups/ups_event.sh
-##Hay que crear la ruta /var/run/nut/upssched/ si no existe con propietario nut:nut
-#PIPEFN /var/run/nut/upssched/upssched.pipe
-#LOCKFN /var/run/nut/upssched/upssched.lock
-#/var/run/nut/upssched/ es borrada periódicamente por el sistema con lo cual
-#upssched deja de funcionar. La solución mas cómoda es usar /tmp/ para almacenar 
-#ambos ficheros:
+```
+
+Hay que crear la ruta /var/run/nut/upssched/ si no existe con propietario nut:nut
+
+```
+PIPEFN /var/run/nut/upssched/upssched.pipe
+LOCKFN /var/run/nut/upssched/upssched.lock
+```
+Como /var/run/nut/upssched/ es borrada periódicamente por el sistema "upssched" deja de funcionar. 
+
+La solución mas cómoda es usar /tmp/ para almacenar ambos ficheros:
+
+````
 PIPEFN /tmp/upssched.pipe
 LOCKFN /tmp/upssched.lock
 ```
