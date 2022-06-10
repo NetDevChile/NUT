@@ -5,7 +5,7 @@ How to Install NUT in SmartGrid System
 ## Instalar NUT ##################
 
 ``` 
-$ apt install nutapt install nut
+$ apt install nut
 ```
 
 ################### Configurar NUT ###################
