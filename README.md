@@ -15,44 +15,39 @@ $ nano /etc/nut/nut.conf
 ```
 
 --------------- Archivo nut.conf -------------------
+
 ```
 MODE=standalone
 ```
+
 ################## Configurar ups.conf ##############
 
 ``` 
 $ nano /etc/nut/ups.conf
 ```
-
 --------------- Archivo ups.conf -------------------
+
 ```
 maxretry = 3
 
 [UPS 1]
 
   driver = snmp-ups
-  
   port = x.x.x.31
-  
   snmp_version = v1
-  
   desc = "UPS High Priority"
-  
   community = public
 
 [UPS 2]
   
   driver = snmp-ups
-  
   port = x.x.x.62
-  
   snmp_version = v1
-  
   desc = "UPS Aux"
-  
-  community = your_network
+  community = site_net
 
 ```
+
 ############## Configurar upsd.conf #################
 
 ```
@@ -142,21 +137,21 @@ nano /etc/nut/upssched.conf
 
 ------------------- Archivo upssched.conf -----------------
 
-############# Network UPS Tools - upssched.conf ###########
-
 ```
 CMDSCRIPT /opt/ups/ups_event.sh
 ```
 
-Hay que crear la ruta /var/run/nut/upssched/ si no existe con propietario nut:nut
+#Hay que crear la ruta /var/run/nut/upssched/ si no existe con propietario nut:nut
 
 ```
+
 PIPEFN /var/run/nut/upssched/upssched.pipe
 LOCKFN /var/run/nut/upssched/upssched.lock
-```
-Como /var/run/nut/upssched/ es borrada periódicamente por el sistema "upssched" deja de funcionar. 
 
-La solución mas cómoda es usar /tmp/ para almacenar ambos ficheros:
+```
+
+#Como /var/run/nut/upssched/ es borrada periódicamente por el sistema "upssched" deja de funcionar. 
+#La solución mas cómoda es usar /tmp/ para almacenar ambos ficheros:
 
 ````
 PIPEFN /tmp/upssched.pipe
