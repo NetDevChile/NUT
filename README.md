@@ -153,7 +153,7 @@ LOCKFN /var/run/nut/upssched/upssched.lock
 #Como /var/run/nut/upssched/ es borrada periódicamente por el sistema "upssched" deja de funcionar. 
 #La solución mas cómoda es usar /tmp/ para almacenar ambos ficheros:
 
-````
+```
 PIPEFN /tmp/upssched.pipe
 LOCKFN /tmp/upssched.lock
 ```
